@@ -14,12 +14,12 @@ data class Producer(
     @SerializedName("permalink") var permalink: String = "",
     @SerializedName("created_at") var createdAt: String = "",
     @SerializedName("updated_at") var updatedAt: String = "",
-//    @SerializedName("images") var images: List<Image> = ArrayList(),
+    @SerializedName("images") var images: List<Image> = ArrayList(),
     @SerializedName("short_description") var shortDescription: String = "",
     @SerializedName("description") var description: String = "",
     @SerializedName("location") var location: String = "",
     @SerializedName("via_wholesaler") var viaWholesaler: Boolean = false,
     @SerializedName("wholesaler_name") var wholesalerName: String = ""
 ) {
-    constructor() : this(0, "", "", "", "","", "", "", false, "")
+    constructor() : this(0, "", "", "", "", ArrayList(),"", "", "", false, "")
 }

@@ -11,15 +11,15 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingLeft="@dimen/lateral_padding"
+        android:paddingRight="@dimen/lateral_padding">
 
         <TextView
             android:id="@+id/producer_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            app:mutableText="@{viewModel.getProducerName()}"
+            app:mutableText="@{viewModel.getName()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,10 +28,21 @@
             android:id="@+id/producer_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:mutableText="@{viewModel.getProducerDescription()}"
+            android:layout_marginTop="@dimen/small_margin"
+            app:mutableText="@{viewModel.getDescription()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/producer_name" />
+
+        <ImageView
+            android:id="@+id/producer_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            app:mutableImages="@{viewModel.getImages()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/producer_description" />
     </android.support.constraint.ConstraintLayout>
 </layout>
