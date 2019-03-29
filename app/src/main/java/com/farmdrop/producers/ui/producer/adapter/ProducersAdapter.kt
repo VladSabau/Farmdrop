@@ -25,8 +25,8 @@ class ProducersAdapter : RecyclerView.Adapter<ProducersAdapter.ViewHolder>() {
         return if (::producers.isInitialized) producers.size else 0
     }
 
-    fun updateProducers(postList: List<Producer>) {
-        this.producers = postList
+    fun updateProducers(producers: List<Producer>) {
+        this.producers = producers
         notifyDataSetChanged()
     }
 

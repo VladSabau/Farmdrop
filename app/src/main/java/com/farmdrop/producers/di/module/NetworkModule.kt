@@ -26,7 +26,7 @@ object NetworkModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun providePostApi(retrofit: Retrofit): ProducersApi {
+    internal fun provideProducersApi(retrofit: Retrofit): ProducersApi {
         return retrofit.create(ProducersApi::class.java)
     }
 

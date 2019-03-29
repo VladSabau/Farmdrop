@@ -40,14 +40,14 @@ class ProducersViewModel(private val producersDao: ProducersDao) : BaseViewModel
 
     private fun loadProducers() {
         subscription = Observable.fromCallable { producersDao.all }
-            .concatMap { dbPostList ->
-                if (dbPostList.isEmpty()) {
+            .concatMap { dbProducersList ->
+                if (dbProducersList.isEmpty()) {
                     producersApi.getProducers().concatMap { producersList ->
                         producersDao.insertAll(producersList.response)
                         Observable.just(producersList.response)
                     }
                 } else {
-                    Observable.just(dbPostList)
+                    Observable.just(dbProducersList)
                 }
             }
             ?.subscribeOn(Schedulers.io())

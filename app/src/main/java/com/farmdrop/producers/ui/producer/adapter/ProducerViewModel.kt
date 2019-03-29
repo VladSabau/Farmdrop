@@ -2,23 +2,30 @@ package com.farmdrop.producers.ui.producer.adapter
 
 import android.arch.lifecycle.MutableLiveData
 import com.farmdrop.producers.BaseViewModel
+import com.farmdrop.producers.data.Image
 import com.farmdrop.producers.data.Producer
 
 class ProducerViewModel : BaseViewModel() {
-    private val postName = MutableLiveData<String>()
-    private val postDescription = MutableLiveData<String>()
+    private val name = MutableLiveData<String>()
+    private val description = MutableLiveData<String>()
+    private val images = MutableLiveData<List<Image>>()
 
     fun bind(producer: Producer) {
-        postName.value = producer.name
+        name.value = producer.name
         //todo: trim short desc
-        postDescription.value = producer.shortDescription
+        description.value = producer.shortDescription
+        images.value = producer.images
     }
 
-    fun getProducerName(): MutableLiveData<String> {
-        return postName
+    fun getName(): MutableLiveData<String> {
+        return name
     }
 
-    fun getProducerDescription(): MutableLiveData<String> {
-        return postDescription
+    fun getDescription(): MutableLiveData<String> {
+        return description
+    }
+
+    fun getImages(): MutableLiveData<List<Image>> {
+        return images
     }
 }
