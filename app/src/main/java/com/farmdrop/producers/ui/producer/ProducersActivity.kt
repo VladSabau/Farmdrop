@@ -17,17 +17,37 @@ class ProducersActivity : AppCompatActivity() {
     private lateinit var viewModel: ProducersViewModel
     private var errorSnackbar: Snackbar? = null
 
+    private var currentPage = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_producers)
-        binding.producersRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding = DataBindingUtil.setContentView(this, com.farmdrop.producers.R.layout.activity_producers)
+        val layout = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.producersRecyclerView.layoutManager = layout
 
         viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(ProducersViewModel::class.java)
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) showError(errorMessage) else hideError()
         })
         binding.viewModel = viewModel
+
+        setPagination(layout)
+    }
+
+    private fun setPagination(layout: LinearLayoutManager) {
+        binding.producersRecyclerView.addOnScrollListener(object : PaginationScrollListener(layout) {
+
+            override fun loadMoreItems() {
+                currentPage += 1
+                viewModel.loadProducers(currentPage, 10)
+            }
+
+            //todo: add logic for last page
+            override fun isLastPage(): Boolean {
+                return false
+            }
+        })
     }
 
     private fun showError(@StringRes errorMessage: Int) {
