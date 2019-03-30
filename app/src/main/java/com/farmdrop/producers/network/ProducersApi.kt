@@ -3,6 +3,7 @@ package com.farmdrop.producers.network
 import com.farmdrop.producers.data.ProducersList
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 /**
  * The interface which provides methods to get result of webservices
@@ -11,5 +12,8 @@ import retrofit2.http.GET
 interface ProducersApi {
 
     @GET("producers")
-    fun getProducers(): Observable<ProducersList>
+    fun getProducers(
+        @Query("page") page: Int,
+        @Query("per_page_limit") perPageLimit: Int
+    ): Observable<ProducersList>
 }

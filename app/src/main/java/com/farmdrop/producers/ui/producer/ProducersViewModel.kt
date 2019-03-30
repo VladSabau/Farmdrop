@@ -42,7 +42,7 @@ class ProducersViewModel(private val producersDao: ProducersDao) : BaseViewModel
         subscription = Observable.fromCallable { producersDao.all }
             .concatMap { dbProducersList ->
                 if (dbProducersList.isEmpty()) {
-                    producersApi.getProducers().concatMap { producersList ->
+                    producersApi.getProducers(1, 10).concatMap { producersList ->
                         producersDao.insertAll(producersList.response)
                         Observable.just(producersList.response)
                     }
