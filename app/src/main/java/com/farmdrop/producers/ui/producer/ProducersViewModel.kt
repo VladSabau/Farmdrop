@@ -25,12 +25,12 @@ class ProducersViewModel(private val producersDao: ProducersDao) : BaseViewModel
 
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val errorClickListener = View.OnClickListener { loadProducers() }
+    val errorClickListener = View.OnClickListener { loadProducers(1, 10) }
 
     private lateinit var subscription: Disposable
 
     init {
-        loadProducers()
+        loadProducers(1, 10)
     }
 
     override fun onCleared() {
@@ -38,11 +38,11 @@ class ProducersViewModel(private val producersDao: ProducersDao) : BaseViewModel
         subscription.dispose()
     }
 
-    private fun loadProducers() {
+    fun loadProducers(page: Int, perPageLimit: Int) {
         subscription = Observable.fromCallable { producersDao.all }
             .concatMap { dbProducersList ->
                 if (dbProducersList.isEmpty()) {
-                    producersApi.getProducers(1, 10).concatMap { producersList ->
+                    producersApi.getProducers(page, perPageLimit).concatMap { producersList ->
                         producersDao.insertAll(producersList.response)
                         Observable.just(producersList.response)
                     }

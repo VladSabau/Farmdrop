@@ -32,6 +32,7 @@ fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
     }
 }
 
+//TODO: add slider for all images
 @BindingAdapter("mutableImages")
 fun loadImage(view: ImageView, images: MutableLiveData<List<Image>>?) {
     val parentActivity: AppCompatActivity? = view.getParentActivity()

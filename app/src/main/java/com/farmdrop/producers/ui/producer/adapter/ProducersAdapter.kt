@@ -4,16 +4,15 @@ import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.farmdrop.producers.R
 import com.farmdrop.producers.data.Producer
 import com.farmdrop.producers.databinding.ProducerItemBinding
 
 class ProducersAdapter : RecyclerView.Adapter<ProducersAdapter.ViewHolder>() {
-    private lateinit var producers: List<Producer>
+    private var producers: ArrayList<Producer> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ProducerItemBinding =
-            DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.producer_item, parent, false)
+            DataBindingUtil.inflate(LayoutInflater.from(parent.context), com.farmdrop.producers.R.layout.producer_item, parent, false)
         return ViewHolder(binding)
     }
 
@@ -22,11 +21,11 @@ class ProducersAdapter : RecyclerView.Adapter<ProducersAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return if (::producers.isInitialized) producers.size else 0
+        return producers.size
     }
 
-    fun updateProducers(producers: List<Producer>) {
-        this.producers = producers
+    fun updateProducers(producerList: List<Producer>) {
+        this.producers.addAll(producerList)
         notifyDataSetChanged()
     }
 
