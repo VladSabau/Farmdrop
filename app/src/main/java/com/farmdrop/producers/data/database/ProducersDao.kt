@@ -4,7 +4,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.farmdrop.producers.data.Producer
+import com.farmdrop.producers.data.model.Producer
 
 /**
  * Created by Vlad Sabau on 23.03.19.
