@@ -14,6 +14,8 @@ buildscript {
     ext.versionGlide = '4.9.0'
     ext.rxjava_version = '2.2.7'
     ext.rxandroid_version = '2.1.0'
+    ext.junit_version = '4.12'
+    ext.mockk_version = '1.9.2.kotlin12'
 
     repositories {
         google()

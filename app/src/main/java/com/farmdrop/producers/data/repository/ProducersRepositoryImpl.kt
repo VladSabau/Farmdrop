@@ -11,7 +11,7 @@ import javax.inject.Inject
 class ProducersRepositoryImpl @Inject constructor(private val localData: LocalData,
                                                   private val remoteData: RemoteData
 ): ProducersRepository {
-    override fun changeUserEmail(page: Int, perPageLimit: Int): Observable<List<Producer>>? {
+    override fun loadProducers(page: Int, perPageLimit: Int): Observable<List<Producer>>? {
         return streamProducers(page, perPageLimit)
     }
 

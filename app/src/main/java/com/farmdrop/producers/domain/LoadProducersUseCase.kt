@@ -10,6 +10,6 @@ import javax.inject.Inject
  */
 class LoadProducersUseCase @Inject constructor(private val repository: ProducersRepository) {
     fun loadProducers(page: Int, perPageLimit: Int): Observable<List<Producer>>? {
-        return repository.changeUserEmail(page, perPageLimit)
+        return repository.loadProducers(page, perPageLimit)
     }
 }
