@@ -11,6 +11,7 @@ import com.farmdrop.producers.ui.producer.adapter.ProducersAdapter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Predicate
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -38,23 +39,31 @@ class ProducersViewModel(private val producersDao: ProducersDao) : BaseViewModel
         subscription.dispose()
     }
 
-    fun loadProducers(page: Int, perPageLimit: Int) {
-        subscription = Observable.fromCallable { producersDao.all }
-            .concatMap { dbProducersList ->
-                if (dbProducersList.isEmpty()) {
-                    producersApi.getProducers(page, perPageLimit).concatMap { producersList ->
-                        producersDao.insertAll(producersList.response)
-                        Observable.just(producersList.response)
-                    }
-                } else {
-                    Observable.just(dbProducersList)
-                }
+    private fun streamProducers(page: Int, perPageLimit: Int): Observable<List<Producer>>? {
+        return fetchProducers(page, perPageLimit)
+            .onErrorResumeNext(Observable.fromCallable { producersDao.all })
+            .filter(Predicate { list -> !list.isEmpty() })
+    }
+
+    private fun fetchProducers(
+        page: Int,
+        perPageLimit: Int
+    ): Observable<List<Producer>> {
+        return producersApi.getProducers(page, perPageLimit)
+            .concatMap { producersList ->
+                producersDao.insertAll(producersList.response)
+                Observable.just(producersList.response)
             }
+    }
+
+    fun loadProducers(page: Int, perPageLimit: Int) {
+        subscription = streamProducers(page, perPageLimit)
+            ?.singleOrError()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.unsubscribeOn(Schedulers.io())
             ?.doOnSubscribe { onRetrieveProducersStart() }
-            ?.doOnTerminate { onRetrieveProducersFinish() }
+            ?.doAfterTerminate { onRetrieveProducersFinish() }
             ?.subscribe(
                 { result -> onRetrieveProducersSuccess(result) },
                 { error -> onRetrieveProducersError(error) }
