@@ -11,25 +11,31 @@ import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import com.farmdrop.producers.ProducersApplication
 import com.farmdrop.producers.R
 import com.farmdrop.producers.databinding.ActivityProducersBinding
 import com.farmdrop.producers.di.ViewModelFactory
+import javax.inject.Inject
 
 class ProducersActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProducersBinding
     private lateinit var viewModel: ProducersViewModel
     private var errorSnackbar: Snackbar? = null
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
     private var currentPage = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ProducersApplication.instance.getApplicationComponent().plusActivityComponent().inject(this)
 
         binding = DataBindingUtil.setContentView(this, com.farmdrop.producers.R.layout.activity_producers)
         val layout = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.producersRecyclerView.layoutManager = layout
 
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(ProducersViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ProducersViewModel::class.java)
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) showError(errorMessage) else hideError()
         })

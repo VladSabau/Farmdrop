@@ -1,6 +1,6 @@
-package com.farmdrop.producers.network
+package com.farmdrop.producers.data.network
 
-import com.farmdrop.producers.data.ProducersList
+import com.farmdrop.producers.data.model.ProducersList
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query

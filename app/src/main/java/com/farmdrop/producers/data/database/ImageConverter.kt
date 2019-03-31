@@ -1,7 +1,7 @@
 package com.farmdrop.producers.data.database
 
 import android.arch.persistence.room.TypeConverter
-import com.farmdrop.producers.data.Image
+import com.farmdrop.producers.data.model.Image
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*

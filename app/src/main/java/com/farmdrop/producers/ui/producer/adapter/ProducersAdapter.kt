@@ -4,7 +4,7 @@ import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.farmdrop.producers.data.Producer
+import com.farmdrop.producers.data.model.Producer
 import com.farmdrop.producers.databinding.ProducerItemBinding
 
 class ProducersAdapter : RecyclerView.Adapter<ProducersAdapter.ViewHolder>() {

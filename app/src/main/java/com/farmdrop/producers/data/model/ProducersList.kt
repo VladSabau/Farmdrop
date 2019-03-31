@@ -1,4 +1,4 @@
-package com.farmdrop.producers.data
+package com.farmdrop.producers.data.model
 
 /**
  * Created by Vlad Sabau on 23.03.19.

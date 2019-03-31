@@ -1,11 +1,11 @@
 package com.farmdrop.producers.ui.producer.adapter
 
 import android.arch.lifecycle.MutableLiveData
-import com.farmdrop.producers.BaseViewModel
-import com.farmdrop.producers.data.Image
-import com.farmdrop.producers.data.Producer
+import android.arch.lifecycle.ViewModel
+import com.farmdrop.producers.data.model.Image
+import com.farmdrop.producers.data.model.Producer
 
-class ProducerViewModel : BaseViewModel() {
+class ProducerViewModel : ViewModel() {
     private val name = MutableLiveData<String>()
     private val description = MutableLiveData<String>()
     private val images = MutableLiveData<List<Image>>()

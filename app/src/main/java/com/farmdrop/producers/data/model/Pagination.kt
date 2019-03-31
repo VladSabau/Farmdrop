@@ -1,4 +1,4 @@
-package com.farmdrop.producers.data
+package com.farmdrop.producers.data.model
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey

@@ -1,25 +1,19 @@
 package com.farmdrop.producers.ui.producer
 
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import android.view.View
-import com.farmdrop.producers.BaseViewModel
 import com.farmdrop.producers.R
-import com.farmdrop.producers.data.Producer
-import com.farmdrop.producers.data.database.ProducersDao
-import com.farmdrop.producers.network.ProducersApi
+import com.farmdrop.producers.data.model.Producer
+import com.farmdrop.producers.domain.LoadProducersUseCase
 import com.farmdrop.producers.ui.producer.adapter.ProducersAdapter
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Predicate
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class ProducersViewModel(private val producersDao: ProducersDao) : BaseViewModel() {
-
-    @Inject
-    lateinit var producersApi: ProducersApi
+class ProducersViewModel @Inject constructor(private val loadProducersUseCase: LoadProducersUseCase) : ViewModel() {
 
     val producersAdapter: ProducersAdapter =
         ProducersAdapter()
@@ -39,25 +33,8 @@ class ProducersViewModel(private val producersDao: ProducersDao) : BaseViewModel
         subscription.dispose()
     }
 
-    private fun streamProducers(page: Int, perPageLimit: Int): Observable<List<Producer>>? {
-        return fetchProducers(page, perPageLimit)
-            .onErrorResumeNext(Observable.fromCallable { producersDao.all })
-            .filter(Predicate { list -> !list.isEmpty() })
-    }
-
-    private fun fetchProducers(
-        page: Int,
-        perPageLimit: Int
-    ): Observable<List<Producer>> {
-        return producersApi.getProducers(page, perPageLimit)
-            .concatMap { producersList ->
-                producersDao.insertAll(producersList.response)
-                Observable.just(producersList.response)
-            }
-    }
-
     fun loadProducers(page: Int, perPageLimit: Int) {
-        subscription = streamProducers(page, perPageLimit)
+        subscription = loadProducersUseCase.loadProducers(page, perPageLimit)
             ?.singleOrError()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
