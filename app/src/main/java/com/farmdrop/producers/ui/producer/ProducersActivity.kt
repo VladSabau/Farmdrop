@@ -2,7 +2,10 @@ package com.farmdrop.producers.ui.producer
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -40,7 +43,8 @@ class ProducersActivity : AppCompatActivity() {
 
             override fun loadMoreItems() {
                 currentPage += 1
-                viewModel.loadProducers(currentPage, 10)
+                if (checkInternetConnection())
+                    viewModel.loadProducers(currentPage, 10)
             }
 
             //todo: add logic for last page
@@ -58,5 +62,11 @@ class ProducersActivity : AppCompatActivity() {
 
     private fun hideError() {
         errorSnackbar?.dismiss()
+    }
+
+    private fun checkInternetConnection(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        return activeNetwork?.isConnected == true
     }
 }
