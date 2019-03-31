@@ -12,14 +12,12 @@ data class Producer(
     @SerializedName("id") @PrimaryKey var id: Int = 0,
     @SerializedName("name") var name: String = "",
     @SerializedName("permalink") var permalink: String = "",
-    @SerializedName("created_at") var createdAt: String = "",
-    @SerializedName("updated_at") var updatedAt: String = "",
+    @SerializedName("created_at") var created_at: String = "",
+    @SerializedName("updated_at") var updated_at: String = "",
     @SerializedName("images") var images: List<Image> = ArrayList(),
-    @SerializedName("short_description") var shortDescription: String = "",
+    @SerializedName("short_description") var short_description: String = "",
     @SerializedName("description") var description: String = "",
     @SerializedName("location") var location: String = "",
-    @SerializedName("via_wholesaler") var viaWholesaler: Boolean = false,
-    @SerializedName("wholesaler_name") var wholesalerName: String = ""
-) {
-    constructor() : this(0, "", "", "", "", ArrayList(),"", "", "", false, "")
-}
+    @SerializedName("via_wholesaler") var via_wholesaler: Boolean = false,
+    @SerializedName("wholesaler_name") var wholesaler_name: String = ""
+)

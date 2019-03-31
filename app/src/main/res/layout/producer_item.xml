@@ -1,48 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
-            name="viewModel"
-            type="com.farmdrop.producers.ui.producer.adapter.ProducerViewModel" />
+                name="viewModel"
+                type="com.farmdrop.producers.ui.producer.adapter.ProducerViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/lateral_padding"
-        android:paddingRight="@dimen/lateral_padding">
-
-        <TextView
-            android:id="@+id/producer_name"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            app:mutableText="@{viewModel.getName()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/producer_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
-            app:mutableText="@{viewModel.getDescription()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/producer_name" />
+            android:paddingLeft="@dimen/lateral_padding"
+            android:paddingRight="@dimen/lateral_padding">
 
         <ImageView
-            android:id="@+id/producer_image"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="@dimen/small_margin"
-            android:layout_marginBottom="@dimen/small_margin"
-            app:mutableImages="@{viewModel.getImages()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/producer_description" />
+                android:id="@+id/producer_image"
+                android:layout_width="@dimen/producer_image_width"
+                android:layout_height="@dimen/producer_image_height"
+                android:layout_marginTop="@dimen/small_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                app:mutableImages="@{viewModel.getImages()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+                android:id="@+id/producer_name"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:textStyle="bold"
+                app:mutableText="@{viewModel.getName()}"
+                app:layout_constraintStart_toEndOf="@+id/producer_image"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+                android:id="@+id/producer_description"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                app:mutableText="@{viewModel.getDescription()}"
+                android:ellipsize="end"
+                android:maxLines="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/producer_image"
+                app:layout_constraintTop_toBottomOf="@+id/producer_name"/>
+
     </android.support.constraint.ConstraintLayout>
 </layout>

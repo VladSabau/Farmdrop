@@ -12,8 +12,7 @@ class ProducerViewModel : BaseViewModel() {
 
     fun bind(producer: Producer) {
         name.value = producer.name
-        //todo: trim short desc
-        description.value = producer.shortDescription
+        description.value = producer.short_description
         images.value = producer.images
     }
 
