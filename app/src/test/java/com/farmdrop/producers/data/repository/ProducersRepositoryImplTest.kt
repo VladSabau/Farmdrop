@@ -1,19 +1,17 @@
 package com.farmdrop.producers.data.repository
 
-import com.farmdrop.producers.data.model.Producer
+import com.farmdrop.producers.BaseTest
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.unmockkAll
 import io.mockk.verify
 import io.reactivex.Observable
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
 /**
- * Created by Vlad Sabau on 07.03.19.
+ * Created by Vlad Sabau on 31.03.19.
  */
-class PhotoCreditRepositoryTest {
+class PhotoCreditRepositoryTest : BaseTest() {
 
     private val localData = mockk<LocalData>(relaxed = true)
     private val remoteData = mockk<RemoteData>(relaxed = true)
@@ -51,29 +49,5 @@ class PhotoCreditRepositoryTest {
         repository.loadProducers(1, 10)?.test()?.assertValue(producers)
 
         verify { localData.insertProducers(producers) }
-    }
-
-    @After
-    fun afterTests() {
-        unmockkAll()
-    }
-
-    private fun getMockProducersList() : List<Producer> {
-        val producersList: ArrayList<Producer> = ArrayList()
-
-        val producer1 = Producer()
-        producer1.id = 1
-
-        val producer2 = Producer()
-        producer2.id = 2
-
-        val producer3 = Producer()
-        producer3.id = 3
-
-        producersList.add(producer1)
-        producersList.add(producer2)
-        producersList.add(producer3)
-
-        return producersList
     }
 }
