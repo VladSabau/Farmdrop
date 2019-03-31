@@ -11,7 +11,7 @@ import com.farmdrop.producers.data.Producer
  */
 @Dao
 interface ProducersDao {
-    @get:Query("SELECT * FROM producer")
+    @get:Query("SELECT * FROM producer ORDER BY producer.name")
     val all: List<Producer>
 
     //TODO: check if you need to insert all
