@@ -36,6 +36,10 @@ android {
             buildConfigField "String", "ENDPOINT_BASE", "\"$host\""
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
