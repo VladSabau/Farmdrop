@@ -7,6 +7,7 @@ import com.farmdrop.producers.R
 import com.farmdrop.producers.data.model.Producer
 import com.farmdrop.producers.domain.LoadProducersUseCase
 import com.farmdrop.producers.ui.producer.adapter.ProducersAdapter
+import com.farmdrop.producers.util.SchedulerProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -24,6 +25,8 @@ class ProducersViewModel @Inject constructor(private val loadProducersUseCase: L
 
     private lateinit var subscription: Disposable
 
+    private val schedulerProvider = SchedulerProvider(Schedulers.io(), AndroidSchedulers.mainThread())
+
     init {
         loadProducers(1, 10)
     }
@@ -35,10 +38,7 @@ class ProducersViewModel @Inject constructor(private val loadProducersUseCase: L
 
     fun loadProducers(page: Int, perPageLimit: Int) {
         subscription = loadProducersUseCase.loadProducers(page, perPageLimit)
-            ?.singleOrError()
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.unsubscribeOn(Schedulers.io())
+            ?.compose(schedulerProvider.getSchedulersForObservable())
             ?.doOnSubscribe { onRetrieveProducersStart() }
             ?.doAfterTerminate { onRetrieveProducersFinish() }
             ?.subscribe(
